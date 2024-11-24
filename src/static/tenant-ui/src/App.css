@@ -16,3 +16,36 @@ body {
 .error {
   color: red;
 }
+
+.sidebar {
+  width: 180px;
+  color: white;
+  background-color: #41464b;
+}
+
+.banner-logo {
+  max-width: 48px;
+}
+
+.logo-title {
+  color: #fff;
+  font-size: large;
+  padding: 10px 10px;
+}
+
+.sidebar-items {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sidebar-item {
+  padding: 5px 0;
+}

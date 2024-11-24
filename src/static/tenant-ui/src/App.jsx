@@ -8,21 +8,24 @@ import ItemPage from "./components/ItemPage";
 import UserList from "./components/UserList";
 import UserPage from "./components/UserPage";
 import "./App.css";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route element={<AuthRouter />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/items" element={<ItemList />} />
-          <Route path="/items/:id" element={<ItemPage />} />
-          <Route path="/users" element={<UserList />} />
-          <Route path="/users/:id" element={<UserPage />} />
-        </Route>
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<AuthRouter />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/items" element={<ItemList />} />
+            <Route path="/items/:id" element={<ItemPage />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/users/:id" element={<UserPage />} />
+          </Route>
+        </Routes>
+      </Layout>
     </Router>
   );
 }
