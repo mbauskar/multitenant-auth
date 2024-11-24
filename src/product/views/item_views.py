@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 
 from product.models import Item
 from product.permissions import IsAdminOrReadOnly
-from product.models.serializers import ItemSerializer
+from product.models.item_serializers import ItemSerializer
 
 
 class ItemViewSet(ModelViewSet):

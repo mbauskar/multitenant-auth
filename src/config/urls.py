@@ -18,9 +18,10 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 
+from tenant.urls import urlpatterns as user_urlpatterns
 from product.urls import urlpatterns as product_urlpatterns
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(product_urlpatterns)),
+    path("api/", include(product_urlpatterns + user_urlpatterns)),
 ]
