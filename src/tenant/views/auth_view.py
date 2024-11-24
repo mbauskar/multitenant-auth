@@ -1,0 +1,46 @@
+from rest_framework import status
+from django.contrib.auth import authenticate
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+
+class LoginView(APIView):
+    """login to application using user name and password"""
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        # Extract username and password from the request data
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        # Validate input
+        if not username or not password:
+            return Response(
+                {"error": "Username and password are required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Respond with user details and CSRF token
+            return Response(
+                {
+                    "message": "Login successful",
+                    "profile": {
+                        "email": user.email,
+                        "username": user.username,
+                        "last_name": user.last_name,
+                        "first_name": user.first_name,
+                    },
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        # Return an error response if authentication fails
+        return Response(
+            {"error": "Invalid username or password"},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )

@@ -7,6 +7,7 @@ import ItemList from "./components/ItemList";
 import ItemPage from "./components/ItemPage";
 import UserList from "./components/UserList";
 import UserPage from "./components/UserPage";
+import "./App.css";
 
 function App() {
   return (

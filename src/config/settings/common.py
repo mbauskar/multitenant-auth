@@ -34,6 +34,7 @@ SHARED_APPS = (
     "tenant",
     "allauth",
     "allauth.account",
+    # "corsheaders",
     "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -159,3 +160,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:5173",
+    "http://0.0.0.0:5173",
+    "http://localhost:5173",
+]
