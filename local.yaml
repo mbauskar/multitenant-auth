@@ -1,0 +1,14 @@
+name: multitenant-auth
+services:
+  postgres-db:
+    image: postgres
+    container_name: postgres-db
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+    env_file:
+      - ./compose/envs/.postgres
+    ports:
+      - "5433:5432"
+
+volumes:
+  postgresdb:

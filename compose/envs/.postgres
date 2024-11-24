@@ -1,0 +1,4 @@
+DATABASE_PORT=5433
+POSTGRES_DB=multitenant_db
+POSTGRES_USER=multitenant_db_user
+POSTGRES_PASSWORD=multitenant_db_pwd
