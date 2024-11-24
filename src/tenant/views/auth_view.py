@@ -1,8 +1,8 @@
 from rest_framework import status
-from django.contrib.auth import authenticate
+from django.contrib.auth import logout, authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 class LoginView(APIView):
@@ -11,7 +11,7 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        # Extract username and password from the request data
+        """login to application using username and password"""
         username = request.data.get("username")
         password = request.data.get("password")
 
@@ -43,4 +43,15 @@ class LoginView(APIView):
         return Response(
             {"error": "Invalid username or password"},
             status=status.HTTP_401_UNAUTHORIZED,
+        )
+
+
+class Logout(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        """logout from the application"""
+        logout(request)
+        return Response(
+            {"message": "Successfully logged out"}, status=status.HTTP_200_OK
         )
