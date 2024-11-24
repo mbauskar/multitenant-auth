@@ -1,0 +1,12 @@
+# directories
+
+.venv
+.ruff_cache
+node_modules
+__pycache__
+src/static/admin
+
+# files
+
+prod.py
+*.pyc
