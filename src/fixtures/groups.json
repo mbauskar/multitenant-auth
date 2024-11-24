@@ -1,0 +1,17 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "Admin",
+      "permissions": [
+        9, 10, 11, 12, 13, 14, 15, 16, 29, 30, 31, 32, 41, 42, 43, 44
+      ]
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": { "name": "User", "permissions": [44] }
+  }
+]
