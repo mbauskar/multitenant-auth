@@ -12,9 +12,16 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if not request.user or not request.user.is_authenticated:
             return False
 
+        # fetch all the user group assigned to the user
+        user_groups = list(request.user.groups.values_list("name", flat=True))
+        if not user_groups:
+            # if there are no group assigned then do not allow to view, edit or disable
+            # resourse
+            return False
+
         # Allow safe methods (GET, HEAD, OPTIONS) for all users
         if request.method in permissions.SAFE_METHODS:
             return True
 
         # Check if user is in the Admin group for write operations
-        return request.user.groups.filter(name="Admin").exists()
+        return "Admin" in user_groups
