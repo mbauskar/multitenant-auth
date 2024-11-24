@@ -1,4 +1,3 @@
-from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -21,35 +20,22 @@ class ItemViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
 
     def perform_create(self, serializer):
-        """
-        Ensure only Admin users can create items.
-        """
-        if not self.request.user.groups.filter(name="Admin").exists():
-            raise permissions.PermissionDenied(
-                "You do not have permission to add items."
-            )
+        """create new item"""
         serializer.save()
 
     def perform_update(self, serializer):
-        """
-        Ensure only Admin users can edit items.
-        """
-        if not self.request.user.groups.filter(name="Admin").exists():
-            raise permissions.PermissionDenied(
-                "You do not have permission to edit items."
-            )
-        serializer.save()
+        """update the item, ignore the is_disabled field"""
+        item = serializer.validated_data
+
+        # ignore the is_disabled if it was sent in the update payload
+        if "is_disabled" in item:
+            item.pop("is_disabled")
+
+        serializer.save(**item)
 
     @action(detail=True, methods=["post"])
     def disable(self, request, pk=None):
-        """
-        Custom action to disable an item (is_disabled=True).
-        """
-        if not request.user.groups.filter(name="Admin").exists():
-            raise permissions.PermissionDenied(
-                "You do not have permission to disable items."
-            )
-
+        """Custom action to disable an item (is_disabled=True)."""
         item = get_object_or_404(Item, pk=pk)
         item.is_disabled = True
         item.save()
