@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchItems } from "../services/items";
 
 const ItemList = () => {
-  const items = [
-    { id: 1, name: "Item 1" },
-    { id: 2, name: "Item 2" },
-  ];
+  // const [error, setError] = useState("");
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await fetchItems();
+      if (response?.error) {
+        // setError(response?.error);
+        return;
+      }
+      setItems(response.items);
+    };
+
+    fetch();
+  }, []);
 
   return (
     <div>

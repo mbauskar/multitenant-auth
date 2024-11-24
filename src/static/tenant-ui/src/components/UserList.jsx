@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { fetchUsers } from "../services/users";
+
 const UserList = () => {
-  const users = [
-    { id: 1, name: "User 1" },
-    { id: 2, name: "User 2" },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await fetchUsers();
+      if (response?.error) {
+        setError(response?.error);
+        return;
+      }
+      setUsers(response.users);
+    };
+
+    fetch();
+  }, []);
 
   return (
     <div>
@@ -13,7 +25,7 @@ const UserList = () => {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            {user.name} - <Link to={`/users/${user.id}`}>View</Link>
+            {user.username} - <Link to={`/users/${user.id}`}>View</Link>
           </li>
         ))}
       </ul>
