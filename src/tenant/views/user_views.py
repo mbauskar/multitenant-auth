@@ -18,9 +18,20 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAdminOrReadOnly]
 
+    def get_queryset(self):
+        """
+        Limit the queryset so that non-admin users can only retrieve their own profile.
+        """
+        if self.request.user.groups.filter(name="Admin").exists():
+            # Admin can see all users
+            return User.objects.all()
+
+        # Non-admin users can only see their own profile
+        return User.objects.filter(id=self.request.user.id)
+
     def perform_create(self, serializer):
         """create new item"""
-        # check for dupicate user
+        # todo: check for dupicate user
         serializer.save()
 
     def perform_update(self, serializer):
