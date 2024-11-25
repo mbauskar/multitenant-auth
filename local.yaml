@@ -1,5 +1,28 @@
 name: multitenant-auth
 services:
+  app:
+    image: app
+    container_name: app
+    stdin_open: true
+    ports:
+      - "8000:8000"
+    build:
+      context: .
+      dockerfile: ./compose/app/app.dockerfile
+    env_file:
+      - ./compose/envs/.postgres
+      - ./compose/envs/.app
+    volumes:
+      - ./src:/app:cached
+      - ./compose/app/nginx.conf:/etc/nginx/sites-enabled/app.conf
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DEPLOYMENT_MODE=dev
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONDONTWRITEBYTECODE=1
+    networks:
+      - backend-network
+
   postgres-db:
     image: postgres
     container_name: postgres-db
@@ -9,6 +32,13 @@ services:
       - ./compose/envs/.postgres
     ports:
       - "5433:5432"
+    networks:
+      - backend-network
 
 volumes:
   postgresdb:
+
+networks:
+  backend-network:
+    name: backend-network
+    driver: bridge

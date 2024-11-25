@@ -1,0 +1,5 @@
+DATABASE_PORT=5432
+POSTGRES_DB=multitenant_db
+DATABASE_HOST=postgres-db
+POSTGRES_USER=multitenant_db_user
+POSTGRES_PASSWORD=multitenant_db_pwd

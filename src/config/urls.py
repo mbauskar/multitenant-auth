@@ -20,8 +20,10 @@ from django.contrib import admin
 
 from tenant.urls import urlpatterns as user_urlpatterns
 from product.urls import urlpatterns as product_urlpatterns
+from config.home_view import Home
 
 urlpatterns = [
+    path("", Home.as_view()),
     path("admin/", admin.site.urls),
     path("api/", include(product_urlpatterns + user_urlpatterns)),
 ]

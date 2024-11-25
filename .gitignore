@@ -5,6 +5,7 @@
 node_modules
 __pycache__
 src/static/admin
+src/static/rest_framework
 
 # files
 
