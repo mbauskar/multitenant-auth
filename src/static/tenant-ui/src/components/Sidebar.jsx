@@ -22,9 +22,9 @@ const Sidebar = (props) => {
       </div>
       <div className="sidebar-items">
         <div className="sidebar-item">Hello {username} !</div>
-        <Link to="/profile" className="sidebar-item sidebar-link">
+        {/* <Link to="/profile" className="sidebar-item sidebar-link">
           My Profile
-        </Link>
+        </Link> */}
         <Link to="/items" className="sidebar-item sidebar-link">
           Items
         </Link>

@@ -15,15 +15,7 @@ WORKDIR /app
 
 # Install system dependencies
 # libpq is for psycopg2, gcc, musl-dev, etc., are needed for compilation
-RUN apk add --no-cache \
-    libpq \
-    gcc \
-    musl-dev \
-    postgresql-dev \
-    nginx \
-    python3-dev \
-    py3-pip \
-    py3-wheel \
+RUN apk add --no-cache libpq gcc musl-dev postgresql-dev python3-dev py3-pip py3-wheel \
     py3-virtualenv
 
 # Copy application code

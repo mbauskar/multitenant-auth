@@ -14,7 +14,6 @@ class Home(APIView):
         index_path = os.path.join(
             settings.BASE_DIR.parent, "static", "tenant-ui", "dist", "index.html"
         )
-        print(index_path, "inde")
         if not os.path.exists(index_path):
             return HttpResponse("React build not found", status=404)
 

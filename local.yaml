@@ -14,7 +14,6 @@ services:
       - ./compose/envs/.app
     volumes:
       - ./src:/app:cached
-      - ./compose/app/nginx.conf:/etc/nginx/sites-enabled/app.conf
     environment:
       - PYTHONUNBUFFERED=1
       - DEPLOYMENT_MODE=dev
