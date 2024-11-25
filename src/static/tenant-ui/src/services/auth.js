@@ -18,4 +18,17 @@ const loginUser = async (username, password) => {
   }
 };
 
-export { loginUser };
+const logoutUser = async () => {
+  let isLoggedOut = false;
+  try {
+    const response = await axiosInstance.post("/logout");
+    if (response.status == 200) {
+      isLoggedOut = true;
+    }
+    return isLoggedOut;
+  } catch (error) {
+    return isLoggedOut;
+  }
+};
+
+export { loginUser, logoutUser };

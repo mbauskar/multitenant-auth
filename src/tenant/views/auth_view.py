@@ -1,5 +1,5 @@
 from rest_framework import status
-from django.contrib.auth import logout, authenticate
+from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -26,6 +26,7 @@ class LoginView(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             # Respond with user details and CSRF token
+            login(request, user)
             return Response(
                 {
                     "message": "Login successful",

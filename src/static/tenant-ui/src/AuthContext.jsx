@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { loginUser } from "./services/auth";
+import { loginUser, logoutUser } from "./services/auth";
 
 export const AuthContext = createContext();
 
@@ -15,7 +15,12 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(isLoggedIn);
     setLoginError(error);
   };
-  const logout = () => setIsAuthenticated(false);
+  const logout = async () => {
+    const loggedOut = await logoutUser();
+    if (loggedOut) {
+      setIsAuthenticated(false);
+    }
+  };
 
   return (
     <AuthContext.Provider

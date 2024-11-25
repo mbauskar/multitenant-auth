@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 
 const Sidebar = (props) => {
-  const { username = "user" } = {};
+  const { logout, username = "user" } = useContext(AuthContext);
+
+  const onLogout = (evt) => {
+    evt.preventDefault();
+    logout();
+  };
+
   return (
     <div className="sidebar p-2 d-flex flex-column">
       <div className="p-2 d-flex flex-column align-items-center">
@@ -15,16 +22,18 @@ const Sidebar = (props) => {
       </div>
       <div className="sidebar-items">
         <div className="sidebar-item">Hello {username} !</div>
-        {/* <Link to="/profile" className="sidebar-item sidebar-link">My Profile</Link> */}
+        <Link to="/profile" className="sidebar-item sidebar-link">
+          My Profile
+        </Link>
         <Link to="/items" className="sidebar-item sidebar-link">
           Items
         </Link>
         <Link to="/users" className="sidebar-item sidebar-link">
           Users
         </Link>
-        <a href="/api/user/logout" className="sidebar-item sidebar-link">
+        <Link className="sidebar-item sidebar-link" onClick={onLogout}>
           Logout
-        </a>
+        </Link>
       </div>
     </div>
   );
