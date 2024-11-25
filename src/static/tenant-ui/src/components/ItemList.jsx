@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import Table from "./Table";
+import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
-import Table from "./Table";
+import React, { useEffect, useState, useContext } from "react";
 
 const ItemList = () => {
-  const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const [items, setItems] = useState([]);
+  const {
+    userProfile: { isAdmin = false },
+  } = useContext(AuthContext);
 
   useEffect(() => {
     const fetch = async () => {
@@ -42,8 +46,13 @@ const ItemList = () => {
 
   return (
     <div>
-      <h1>Items</h1>
-      <Table items={items} columns={columns} onRowClick={onRowClick} />
+      <h1>Products</h1>
+      <Table
+        items={items}
+        columns={columns}
+        onRowClick={onRowClick}
+        allowRowClick={isAdmin}
+      />
     </div>
   );
 };

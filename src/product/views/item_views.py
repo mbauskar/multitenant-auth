@@ -40,3 +40,11 @@ class ItemViewSet(ModelViewSet):
         item.is_disabled = True
         item.save()
         return Response({"status": "Item disabled successfully!"})
+
+    @action(detail=True, methods=["post"])
+    def enable(self, request, pk=None):
+        """Custom action to disable an item (is_disabled=False)."""
+        item = get_object_or_404(Item, pk=pk)
+        item.is_disabled = False
+        item.save()
+        return Response({"status": "Item enabled successfully!"})

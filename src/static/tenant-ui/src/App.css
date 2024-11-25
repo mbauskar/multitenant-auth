@@ -17,6 +17,10 @@ body {
   color: red;
 }
 
+.success {
+  color: green;
+}
+
 .sidebar {
   width: 180px;
   color: white;

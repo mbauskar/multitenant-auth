@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 const Sidebar = (props) => {
-  const { logout, username = "user" } = useContext(AuthContext);
-
+  const { logout, userProfile = {} } = useContext(AuthContext);
   const onLogout = (evt) => {
     evt.preventDefault();
     logout();
@@ -21,16 +20,20 @@ const Sidebar = (props) => {
         <div className="logo-title">Tenant</div>
       </div>
       <div className="sidebar-items">
-        <div className="sidebar-item">Hello {username} !</div>
-        {/* <Link to="/profile" className="sidebar-item sidebar-link">
+        <div className="sidebar-item">
+          Hello {userProfile?.username || "user"} !
+        </div>
+        <Link to="/profile" className="sidebar-item sidebar-link">
           My Profile
-        </Link> */}
+        </Link>
         <Link to="/items" className="sidebar-item sidebar-link">
           Items
         </Link>
-        <Link to="/users" className="sidebar-item sidebar-link">
-          Users
-        </Link>
+        {userProfile?.isAdmin ? (
+          <Link to="/users" className="sidebar-item sidebar-link">
+            Users
+          </Link>
+        ) : null}
         <Link className="sidebar-item sidebar-link" onClick={onLogout}>
           Logout
         </Link>

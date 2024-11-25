@@ -35,6 +35,7 @@ class LoginView(APIView):
                         "username": user.username,
                         "last_name": user.last_name,
                         "first_name": user.first_name,
+                        "roles": list(user.groups.values_list("name", flat=True)),
                     },
                 },
                 status=status.HTTP_200_OK,

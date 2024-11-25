@@ -9,7 +9,7 @@ const loginUser = async (username, password) => {
       password,
     });
     if (response.status == 200) {
-      return { isLoggedIn: true, ...response.data };
+      return { isLoggedIn: true, userProfile: response?.data?.profile };
     }
 
     return { isLoggedIn, error: "failed to login" };
