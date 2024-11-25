@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchItems } from "../services/items";
+import Table from "./Table";
 
 const ItemList = () => {
   // const [error, setError] = useState("");
@@ -19,16 +20,25 @@ const ItemList = () => {
     fetch();
   }, []);
 
+  const columns = [
+    {
+      name: "id",
+      label: "Id",
+    },
+    {
+      name: "name",
+      label: "Product Name",
+    },
+    {
+      name: "price",
+      label: "Price",
+    },
+  ];
+
   return (
     <div>
       <h1>Items</h1>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            {item.name} - <Link to={`/items/${item.id}`}>Edit</Link>
-          </li>
-        ))}
-      </ul>
+      <Table items={items} columns={columns} />
     </div>
   );
 };

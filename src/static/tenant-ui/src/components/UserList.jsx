@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Table from "./Table";
 
 import { fetchUsers } from "../services/users";
 
@@ -19,16 +20,29 @@ const UserList = () => {
     fetch();
   }, []);
 
+  const columns = [
+    {
+      name: "id",
+      label: "Id",
+    },
+    {
+      name: "username",
+      label: "Username",
+    },
+    {
+      name: "first_name",
+      label: "First Name",
+    },
+    {
+      name: "last_name",
+      label: "Last Name",
+    },
+  ];
+
   return (
     <div>
       <h1>Users</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.username} - <Link to={`/users/${user.id}`}>View</Link>
-          </li>
-        ))}
-      </ul>
+      <Table items={users} columns={columns} />
     </div>
   );
 };
