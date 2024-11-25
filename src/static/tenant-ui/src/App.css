@@ -57,3 +57,19 @@ body {
 .clickable-row {
   cursor: pointer;
 }
+
+.dashboard-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dashboard-item {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 150px;
+  background-color: aliceblue;
+}

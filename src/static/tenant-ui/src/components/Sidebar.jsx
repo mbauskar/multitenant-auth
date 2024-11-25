@@ -23,8 +23,8 @@ const Sidebar = (props) => {
         <div className="sidebar-item">
           Hello {userProfile?.username || "user"} !
         </div>
-        <Link to="/profile" className="sidebar-item sidebar-link">
-          My Profile
+        <Link to="/dashboard" className="sidebar-item sidebar-link">
+          Dashboard
         </Link>
         <Link to="/products" className="sidebar-item sidebar-link">
           Items
