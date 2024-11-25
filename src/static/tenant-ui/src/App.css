@@ -49,3 +49,7 @@ body {
 .sidebar-item {
   padding: 5px 0;
 }
+
+.clickable-row {
+  cursor: pointer;
+}

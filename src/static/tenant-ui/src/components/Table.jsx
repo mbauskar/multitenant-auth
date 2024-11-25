@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 
 const TableRow = (props) => {
-  const { isHeader = false, item = {}, columns = [] } = props;
+  const {
+    item = {},
+    columns = [],
+    allowRowClick = true,
+    onRowClick = () => null,
+  } = props;
   if (!item || !columns.length) {
     return null;
   }
 
+  const handleClick = () => {
+    if (!allowRowClick) {
+      return;
+    }
+    onRowClick(item);
+  };
+
   return (
-    <tr>
+    <tr className={allowRowClick ? "clickable-row" : ""} onClick={handleClick}>
       {columns.map(({ name = "" }) => {
         let value = name in item ? item[name] : "";
         return <td>{value}</td>;
@@ -17,7 +29,12 @@ const TableRow = (props) => {
 };
 
 const Table = (props) => {
-  const { items = [], columns = [] } = props;
+  const {
+    items = [],
+    columns = [],
+    allowRowClick = true,
+    onRowClick = () => null,
+  } = props;
   if (!items.length || !columns.length) {
     return "invalid table definition";
   }
@@ -34,7 +51,13 @@ const Table = (props) => {
       <tbody>
         {items.map((item, idx) => {
           return (
-            <TableRow key={`table-row-${idx}`} item={item} columns={columns} />
+            <TableRow
+              key={`table-row-${idx}`}
+              item={item}
+              columns={columns}
+              allowRowClick={allowRowClick}
+              onRowClick={onRowClick}
+            />
           );
         })}
       </tbody>

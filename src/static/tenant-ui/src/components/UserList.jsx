@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Table from "./Table";
 
 import { fetchUsers } from "../services/users";
 
 const UserList = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -39,10 +40,15 @@ const UserList = () => {
     },
   ];
 
+  const onRowClick = (item) => {
+    const { id } = item;
+    navigate(`/users/${id}`);
+  };
+
   return (
     <div>
       <h1>Users</h1>
-      <Table items={users} columns={columns} />
+      <Table items={users} columns={columns} onRowClick={onRowClick} />
     </div>
   );
 };

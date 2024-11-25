@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
 import Table from "./Table";
 
 const ItemList = () => {
-  // const [error, setError] = useState("");
   const [items, setItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetch = async () => {
@@ -19,6 +19,11 @@ const ItemList = () => {
 
     fetch();
   }, []);
+
+  const onRowClick = (item) => {
+    const { id } = item;
+    navigate(`/items/${id}`);
+  };
 
   const columns = [
     {
@@ -38,7 +43,7 @@ const ItemList = () => {
   return (
     <div>
       <h1>Items</h1>
-      <Table items={items} columns={columns} />
+      <Table items={items} columns={columns} onRowClick={onRowClick} />
     </div>
   );
 };
