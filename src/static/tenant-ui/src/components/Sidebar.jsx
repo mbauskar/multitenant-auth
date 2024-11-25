@@ -26,7 +26,7 @@ const Sidebar = (props) => {
         <Link to="/profile" className="sidebar-item sidebar-link">
           My Profile
         </Link>
-        <Link to="/items" className="sidebar-item sidebar-link">
+        <Link to="/products" className="sidebar-item sidebar-link">
           Items
         </Link>
         {userProfile?.isAdmin ? (

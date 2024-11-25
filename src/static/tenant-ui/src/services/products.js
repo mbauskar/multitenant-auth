@@ -1,8 +1,8 @@
 import axiosInstance from "./axios";
 
-const fetchItems = async () => {
+const fetchProducts = async () => {
   try {
-    const response = await axiosInstance.get("/items/");
+    const response = await axiosInstance.get("/products/");
     if (response.status == 200) {
       return { items: response?.data };
     }
@@ -13,9 +13,9 @@ const fetchItems = async () => {
   }
 };
 
-const fetchItem = async (itemId) => {
+const fetchProduct = async (itemId) => {
   try {
-    const response = await axiosInstance.get(`/items/${itemId}`);
+    const response = await axiosInstance.get(`/products/${itemId}`);
     if (response.status == 200) {
       return response?.data;
     }
@@ -26,11 +26,11 @@ const fetchItem = async (itemId) => {
   }
 };
 
-const saveItem = async (item) => {
+const saveProduct = async (item) => {
   try {
     const response = !item?.id
-      ? await axiosInstance.post("/items/", item)
-      : await axiosInstance.put(`/items/${item?.id}/`, item);
+      ? await axiosInstance.post("/products/", item)
+      : await axiosInstance.put(`/products/${item?.id}/`, item);
     if (response.status == 200) {
       return response?.data;
     }
@@ -43,8 +43,8 @@ const saveItem = async (item) => {
 
 const enableDisableItem = async (itemId, shouldDisable = false) => {
   const url = shouldDisable
-    ? `/items/${itemId}/disable/`
-    : `/items/${itemId}/enable/`;
+    ? `/products/${itemId}/disable/`
+    : `/products/${itemId}/enable/`;
   try {
     const response = await axiosInstance.post(url);
     if (response.status == 200) {
@@ -60,4 +60,4 @@ const enableDisableItem = async (itemId, shouldDisable = false) => {
   }
 };
 
-export { fetchItems, fetchItem, saveItem, enableDisableItem };
+export { fetchProducts, fetchProduct, saveProduct, enableDisableItem };

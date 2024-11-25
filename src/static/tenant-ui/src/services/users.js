@@ -13,4 +13,17 @@ const fetchUsers = async () => {
   }
 };
 
-export { fetchUsers };
+const fetchUserProfile = async () => {
+  try {
+    const response = await axiosInstance.get("/users/me/");
+    if (response.status == 200) {
+      return response?.data;
+    }
+
+    return { error: "failed to fetch users" };
+  } catch (error) {
+    return { error: "failed to fetch users", ...error?.response?.data };
+  }
+};
+
+export { fetchUsers, fetchUserProfile };

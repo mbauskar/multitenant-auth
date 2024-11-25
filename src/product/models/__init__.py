@@ -1,3 +1,3 @@
-from product.models.item import Item
+from product.models.product import Product
 
-__all__ = ["Item"]
+__all__ = ["Product"]

@@ -3,19 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 const LoginPage = () => {
-  const { login, isAuthenticated, loginError = "" } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { login, isAuthenticated, loginError = "" } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
+  const redirectIfLoggedIn = () => {
     if (!isAuthenticated) {
       return;
     }
 
     navigate("/dashboard");
-  }, [isAuthenticated]);
+  };
+
+  useEffect(() => redirectIfLoggedIn(), []);
+  useEffect(() => redirectIfLoggedIn(), [isAuthenticated]);
   useEffect(() => setError(loginError), [loginError]);
 
   const handleLogin = () => {
@@ -32,7 +35,7 @@ const LoginPage = () => {
     <div className="px-4 d-flex flex-row h-100">
       <div className="banner" style={{ flex: 1 }}></div>
       <div className="p-2 d-flex flex-row align-items-center">
-        <div className="login-form">
+        <form className="login-form" onSubmit={(e) => e.preventDefault()}>
           <div className="form-group pb-2">
             <label htmlFor="username">Username</label>
             <input
@@ -62,7 +65,16 @@ const LoginPage = () => {
             </button>
           </div>
           {error ? <div className="py-2 error text-center">{error}</div> : null}
-        </div>
+          <hr />
+          <div className="pt-2">
+            <button
+              onClick={() => navigate("/signup")}
+              className="btn btn-success w-100"
+            >
+              Create Account
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

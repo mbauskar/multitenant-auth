@@ -6,7 +6,7 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <nav>
-        <Link to="/items">Items</Link> | <Link to="/users">Users</Link>
+        <Link to="/products">Products</Link> | <Link to="/users">Users</Link>
       </nav>
     </div>
   );

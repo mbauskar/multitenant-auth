@@ -51,4 +51,12 @@ class UserViewSet(ModelViewSet):
     @action(detail=False, methods=["get"])
     def me(self, request, pk=None):
         """Custom action to disable an item (is_disabled=True)."""
-        return Response(UserSerializer(request.user).data)
+        return Response(
+            {
+                "email": request.user.email,
+                "username": request.user.username,
+                "last_name": request.user.last_name,
+                "first_name": request.user.first_name,
+                "roles": list(request.user.groups.values_list("name", flat=True)),
+            }
+        )

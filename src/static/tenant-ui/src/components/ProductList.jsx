@@ -1,24 +1,24 @@
 import Table from "./Table";
 import { AuthContext } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
-import { fetchItems } from "../services/items";
+import { fetchProducts } from "../services/products";
 import React, { useEffect, useState, useContext } from "react";
 
-const ItemList = () => {
+const ProductList = () => {
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
+  const [products, setProducts] = useState([]);
   const {
     userProfile: { isAdmin = false },
   } = useContext(AuthContext);
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await fetchItems();
+      const response = await fetchProducts();
       if (response?.error) {
         // setError(response?.error);
         return;
       }
-      setItems(response.items);
+      setProducts(response.items);
     };
 
     fetch();
@@ -26,7 +26,7 @@ const ItemList = () => {
 
   const onRowClick = (item) => {
     const { id } = item;
-    navigate(`/items/${id}`);
+    navigate(`/products/${id}`);
   };
 
   const columns = [
@@ -48,7 +48,7 @@ const ItemList = () => {
     <div>
       <h1>Products</h1>
       <Table
-        items={items}
+        items={products}
         columns={columns}
         onRowClick={onRowClick}
         allowRowClick={isAdmin}
@@ -57,4 +57,4 @@ const ItemList = () => {
   );
 };
 
-export default ItemList;
+export default ProductList;

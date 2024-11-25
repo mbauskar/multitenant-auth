@@ -1,11 +1,15 @@
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import React, { useEffect, useState, useContext } from "react";
-import { fetchItem, saveItem, enableDisableItem } from "../services/items";
+import {
+  fetchProduct,
+  saveProduct,
+  enableDisableItem,
+} from "../services/products";
 
-const ItemPage = () => {
+const ProductPage = () => {
   const { id } = useParams();
-  const [item, setItem] = useState({});
+  const [product, setProduct] = useState({});
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   const {
@@ -14,26 +18,26 @@ const ItemPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await fetchItem(id);
+      const response = await fetchProduct(id);
       if (response?.error) {
         setError(response?.error);
         return;
       }
 
-      setItem(response);
+      setProduct(response);
     };
 
     fetch();
   }, []);
 
   const setItemValues = (e) => {
-    setItem({ ...item, [e.target.id]: e.target.value });
+    setProduct({ ...product, [e.target.id]: e.target.value });
   };
 
   const save = async () => {
     setError("");
     setStatus("");
-    const response = await saveItem(item);
+    const response = await saveProduct(product);
     if (response?.error) {
       setError(response?.error);
       return;
@@ -45,13 +49,16 @@ const ItemPage = () => {
   const disableOrEnable = async () => {
     setError("");
     setStatus("");
-    const response = await enableDisableItem(item?.id, !item?.is_disabled);
+    const response = await enableDisableItem(
+      product?.id,
+      !product?.is_disabled,
+    );
     if (response?.error) {
       setError(response?.error);
       return;
     }
 
-    setItem({ ...item, is_disabled: !item?.is_disabled });
+    setProduct({ ...product, is_disabled: !product?.is_disabled });
     setStatus(response?.status);
   };
 
@@ -61,7 +68,7 @@ const ItemPage = () => {
         <label htmlFor="name">Name</label>
         <input
           id="name"
-          value={item?.name || ""}
+          value={product?.name || ""}
           className="form-control"
           placeholder="Enter name"
           aria-describedby="nameHelp"
@@ -78,7 +85,7 @@ const ItemPage = () => {
           type="number"
           placeholder="price"
           className="form-control"
-          value={item?.price || ""}
+          value={product?.price || ""}
           onChange={setItemValues}
         />
       </div>
@@ -89,9 +96,9 @@ const ItemPage = () => {
           </button>
           <button
             onClick={disableOrEnable}
-            className={`btn ${!item.is_disabled ? "btn-danger" : "btn-success"} mx-2`}
+            className={`btn ${!product.is_disabled ? "btn-danger" : "btn-success"} mx-2`}
           >
-            {!item.is_disabled ? "Disable" : "Enable"} Product
+            {!product.is_disabled ? "Disable" : "Enable"} Product
           </button>
         </div>
       ) : null}
@@ -101,4 +108,4 @@ const ItemPage = () => {
   );
 };
 
-export default ItemPage;
+export default ProductPage;
