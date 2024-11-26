@@ -15,7 +15,7 @@ const fetchUsers = async () => {
 
 const fetchUserProfile = async () => {
   try {
-    const response = await axiosInstance.get("/users/me/");
+    const response = await axiosInstance.get("/heartbeat");
     if (response.status == 200) {
       return response?.data;
     }
@@ -26,4 +26,19 @@ const fetchUserProfile = async () => {
   }
 };
 
-export { fetchUsers, fetchUserProfile };
+const saveUser = async (user) => {
+  try {
+    const response = !user?.id
+      ? await axiosInstance.post("/signup", user)
+      : await axiosInstance.put(`/users/${user?.id}/`, user);
+    if (response.status == 200) {
+      return response?.data;
+    }
+
+    return { error: "failed to save user" };
+  } catch (error) {
+    return { error: "failed to save user", ...error?.response?.data };
+  }
+};
+
+export { fetchUsers, fetchUserProfile, saveUser };

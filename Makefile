@@ -1,5 +1,5 @@
 build:
-	docker-compose -f local.yaml build --pogress=plain
+	docker-compose -f local.yaml build app --progress=plain
 	docker image prune -f
 
 run:

@@ -56,8 +56,8 @@ def create_superuser(group, tenant_name=""):
             is_superuser=True,
             last_name=lastname,
             username="jane.doe",
-            password="qwerty123",
-            email="jane.doe@example.com",
+            password="admin123",
+            email=f"jane.doe@{tenant_name}.com".lower(),
         )
         global_superuser.groups.add(group)
         print("Created user: ", global_superuser)
@@ -68,6 +68,7 @@ def create_superuser(group, tenant_name=""):
 def setup():
     """create tenants and products for the application"""
     for schema_name, name in [
+        ["test", "Test Corp"],
         ["acme", "Acme Corp"],
         ["skynet", "Skynet Corp"],
     ]:
@@ -83,7 +84,9 @@ def setup():
         Domain.objects.get_or_create(
             tenant=tenant,
             is_primary=True,
-            domain=f"{tenant.schema_name}.localhost".lower(),
+            domain=f"{tenant.schema_name}.localhost".lower()
+            if tenant.schema_name != "test"
+            else "0.0.0.0",
         )
         with tenant_context(tenant):
             admin, user = create_groups()

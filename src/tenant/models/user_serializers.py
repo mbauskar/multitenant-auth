@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    role = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = [
@@ -14,4 +16,9 @@ class UserSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_active",
             "date_joined",
+            "role",
         ]
+
+    def get_role(self, instance):
+        """return the role assigned to user"""
+        return ", ".join(list(instance.groups.values_list("name", flat=True)))

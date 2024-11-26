@@ -15,17 +15,21 @@ import { AuthContext } from "./AuthContext";
 import { fetchUserProfile } from "./services/users";
 
 function App() {
-  const { setUserProfile, setIsAuthenticated } = useContext(AuthContext);
+  const { setUserProfile, setIsAuthenticated, setTenantName } =
+    useContext(AuthContext);
   useEffect(() => {
     const fetch = async () => {
-      const response = await fetchUserProfile();
-      if (response?.error) {
-        setError(response?.error);
+      const { error, profile = {}, tenant = "" } = await fetchUserProfile();
+      if (error) {
         setIsAuthenticated(false);
         return;
       }
-      setIsAuthenticated(true);
-      setUserProfile(response);
+      if (Object.keys(profile).length) {
+        setIsAuthenticated(true);
+        const roles = profile?.roles || [];
+        setUserProfile({ ...profile, isAdmin: roles.includes("Admin") });
+      }
+      setTenantName(tenant);
     };
 
     fetch();

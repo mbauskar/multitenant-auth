@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 const Sidebar = (props) => {
-  const { logout, userProfile = {} } = useContext(AuthContext);
+  const { logout, userProfile = {}, tenantName = "" } = useContext(AuthContext);
   const onLogout = (evt) => {
     evt.preventDefault();
     logout();
@@ -17,7 +17,7 @@ const Sidebar = (props) => {
           alt="logo"
           className="banner-logo"
         />
-        <div className="logo-title">Tenant</div>
+        <div className="logo-title">{tenantName || "Tenant"}</div>
       </div>
       <div className="sidebar-items">
         <div className="sidebar-item">

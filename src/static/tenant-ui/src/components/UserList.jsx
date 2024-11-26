@@ -38,6 +38,10 @@ const UserList = () => {
       name: "last_name",
       label: "Last Name",
     },
+    {
+      name: "role",
+      label: "Role",
+    },
   ];
 
   const onRowClick = (item) => {

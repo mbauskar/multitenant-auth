@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [loginError, setLoginError] = useState("");
+  const [tenantName, setTenantName] = useState("");
   const [userProfile, setUserProfile] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -36,6 +37,8 @@ export const AuthProvider = ({ children }) => {
         userProfile,
         setUserProfile,
         setIsAuthenticated,
+        tenantName,
+        setTenantName,
       }}
     >
       {children}

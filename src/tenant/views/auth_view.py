@@ -5,6 +5,32 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
+class HeartbeatView(APIView):
+    """checks if the user is logged in and returns the tenant meta"""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        """check if user is logged in, if yes return meta other wise return empty response"""
+        user = (
+            {
+                "email": request.user.email,
+                "username": request.user.username,
+                "last_name": request.user.last_name,
+                "first_name": request.user.first_name,
+                "roles": list(request.user.groups.values_list("name", flat=True)),
+            }
+            if request.user.is_authenticated
+            else {}
+        )
+        return Response(
+            {
+                "profile": user,
+                "tenant": request.tenant.name,
+            }
+        )
+
+
 class LoginView(APIView):
     """login to application using user name and password"""
 

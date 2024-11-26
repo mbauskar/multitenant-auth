@@ -34,8 +34,6 @@ RUN rm -rf /app/static \
     && dos2unix /start-app.sh /entrypoint.sh \
     && chmod +x /entrypoint.sh /start-app.sh
 
-RUN cd ../ && ls -l
-
 # Copy React static files from frontend-build stage
 COPY --from=frontend-build /app/frontend/dist/ ./static/tenant-ui/dist
 ENTRYPOINT ["/entrypoint.sh"]

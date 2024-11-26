@@ -4,7 +4,12 @@ import { AuthContext } from "../AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, isAuthenticated, loginError = "" } = useContext(AuthContext);
+  const {
+    login,
+    isAuthenticated,
+    loginError = "",
+    tenantName,
+  } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +38,16 @@ const LoginPage = () => {
 
   return (
     <div className="px-4 d-flex flex-row h-100">
-      <div className="banner" style={{ flex: 1 }}></div>
+      <div className="banner" style={{ flex: 1 }}>
+        <div>
+          <div style={{ fontSize: "30px", fontWeight: "bold" }}>
+            {tenantName}
+          </div>
+          <div>
+            Welcome to {tenantName}, Please Sign In or Sign Up to proceed
+          </div>
+        </div>
+      </div>
       <div className="p-2 d-flex flex-row align-items-center">
         <form className="login-form" onSubmit={(e) => e.preventDefault()}>
           <div className="form-group pb-2">
