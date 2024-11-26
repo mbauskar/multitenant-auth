@@ -1,5 +1,9 @@
+build:
+	docker-compose -f local.yaml build --pogress=plain
+	docker image prune -f
+
 run:
-	docker-compose -f local.yaml up -d
+	docker-compose -f local.yaml up
 
 down:
 	docker-compose -f local.yaml down

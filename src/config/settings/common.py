@@ -34,6 +34,7 @@ SHARED_APPS = (
     "tenant",
     "allauth",
     "allauth.account",
+    "django_extensions",
     # "corsheaders",
     "rest_framework",
     "django.contrib.admin",

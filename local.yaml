@@ -2,16 +2,18 @@ name: multitenant-auth
 services:
   app:
     image: app
-    container_name: app
     stdin_open: true
+    container_name: app
     ports:
       - "8000:8000"
     build:
       context: .
       dockerfile: ./compose/app/app.dockerfile
+    entrypoint: /bin/sh /entrypoint.sh
+    command: /bin/sh /start-app.sh
     env_file:
-      - ./compose/envs/.postgres
       - ./compose/envs/.app
+      - ./compose/envs/.postgres
     volumes:
       - ./src:/app:cached
     environment:

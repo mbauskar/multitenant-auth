@@ -16,11 +16,13 @@ WORKDIR /app
 # Install system dependencies
 # libpq is for psycopg2, gcc, musl-dev, etc., are needed for compilation
 RUN apk add --no-cache libpq gcc musl-dev postgresql-dev python3-dev py3-pip py3-wheel \
-    py3-virtualenv
+    py3-virtualenv dos2unix
 
 # Copy application code
 COPY ./src /app/
 COPY ./requirements /app/requirements/
+COPY ./compose/app/entrypoint.sh /entrypoint.sh
+COPY ./compose/app/start-app.sh /start-app.sh
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r ./requirements/dev.txt
@@ -28,17 +30,12 @@ RUN pip install --no-cache-dir -r ./requirements/dev.txt
 # Prepare static files for Nginx
 RUN rm -rf /app/static \
     && mkdir -p /app/static/tenant-ui \
-    && python develop.py collectstatic --noinput
+    && python develop.py collectstatic --noinput \
+    && dos2unix /start-app.sh /entrypoint.sh \
+    && chmod +x /entrypoint.sh /start-app.sh
+
+RUN cd ../ && ls -l
 
 # Copy React static files from frontend-build stage
 COPY --from=frontend-build /app/frontend/dist/ ./static/tenant-ui/dist
-
-# Nginx Configuration
-RUN mkdir -p /run/nginx
-# COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-
-# Expose ports
-EXPOSE 8000 80
-
-# Start Nginx and the Django app using a process manager
-CMD ["sh", "-c", "nginx && python develop.py runserver 0.0.0.0:8000"]
+ENTRYPOINT ["/entrypoint.sh"]
