@@ -48,7 +48,7 @@ class ProductViewSet(ModelViewSet):
     def enable(self, request, pk=None):
         """Custom action to disable an product (is_disabled=False)."""
         product = get_object_or_404(Product, pk=pk)
-        if product.is_disabled:
+        if not product.is_disabled:
             return Response({"error": "Product is already enabled"}, status=400)
 
         product.is_disabled = False
